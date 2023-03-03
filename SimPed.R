@@ -6,7 +6,7 @@
 # 2) Number of generations
 # 3) Sex ratio for offspring
 # 4) Marriage rate
-# 5) Fixed local pedigree pattern: for example, force the 2nd generation to be a pair of twins
+### 5) Fixed local pedigree pattern: for example, force the 2nd generation to be a pair of twins
 
 
 ## The final function:
@@ -23,10 +23,13 @@ SimPed <- function(kpc = 3,
                    balancedSex = FALSE,
                    balancedmar = FALSE
                    ){
+      # SexRatio: ratio of male over female in the offspring setting; used in the between generation combinations
+      SexRatio <- sexR/(1-sexR)
+      
       # Calculate the expected family size in each generations
       sizeGens <- allGens(kpc = kpc, Ngen = Ngen, marR = marR)
       famSizeIndex <- 1:sum(sizeGens)
-      print(sizeGens)
+      
       # Step 1: Let's build the connection within each generation first
       for (i in 1: Ngen) {
             idGen <- paste(i,"-",1:sizeGens[i],sep = "")
@@ -97,23 +100,24 @@ SimPed <- function(kpc = 3,
                   
                   # sample single ids from male ids and female ids
                   UsedIdFemale <- sample(df_Ngen$id[df_Ngen$sex == "F"], nSingleFemale)
-                  print(c("Used F", UsedIdFemale))
+                  ##print(c("Used F", UsedIdFemale))
                   UsedIdMale <- sample(df_Ngen$id[df_Ngen$sex == "M"], nSingleMale)
-                  print(c("Used M", UsedIdMale))
+                  ##print(c("Used M", UsedIdMale))
                   
-                  UsedId <- c(UsedIdFeMale, UsedIdMale)
+                  UsedId <- c(UsedIdFemale, UsedIdMale)
 
                   # Create spouses
                   for(j in 1:nrow(df_Ngen)){
                         if(df_Ngen$id[j] %in% UsedId){
                               next
                         }else {
-                              idx <- j+1
+                              #idx <- j+1
                               if(df_Ngen$sex[j] == "F"){
                                     
-                                    for (k in idx:nrow(df_Ngen)){
+                                    for (k in (j+1):nrow(df_Ngen)){
                                           idr <- df_Ngen$id[k]
                                           tgt <- (!(idr %in% UsedId)) & df_Ngen$sex[k]=="M" 
+                                          #tgt <- ifelse(is.na(tgt),FALSE,TRUE)
                                           if(tgt){
                                                 df_Ngen$spt[j] <- df_Ngen$id[k]
                                                 df_Ngen$spt[k] <- df_Ngen$id[j]
@@ -127,9 +131,10 @@ SimPed <- function(kpc = 3,
                                    
                               }else {
                                     
-                                    for (k in idx:nrow(df_Ngen)){
+                                    for (k in (j+1):nrow(df_Ngen)){
                                           idr <- df_Ngen$id[k]
                                           tgt <- (!(idr %in% UsedId)) & df_Ngen$sex[k]=="F" 
+                                          #tgt <- ifelse(is.na(tgt),FALSE,TRUE)
                                           if(tgt){
                                                 df_Ngen$spt[j] <- df_Ngen$id[k]
                                                 df_Ngen$spt[k] <- df_Ngen$id[j]
@@ -143,7 +148,7 @@ SimPed <- function(kpc = 3,
                                     
                               }
                         }
-                       # print(UsedId)  
+                        #print(UsedId)  
                   }
             } 
       if(i == 1) {
@@ -156,52 +161,234 @@ SimPed <- function(kpc = 3,
             
       }
       
-      # # Step 2: Let's try to build connection between each two generations
-      # for (i in 1: Ngen){ 
-      #       # generation 1 doesn't need any mother and father
-      #       if (i == 1) {
-      #             next
-      #       } else {
-      #             # calculate the number of couples in the i-1 th generation
-      #             N_couples <- (sizeGens[i-1] - sum(is.na(df_Fam$spt[df_Fam$gen == i-1])))*0.5
-      #             # calculate the number of members in the i th generation that have a link to the couples in the i-1 th generation
-      #             N_LinkedMem <- N_couples*kpc
-      #             # decompose the linked members into females and males respectively
-      #             N_LinkedFemale <- round(N_LinkedMem*(1-sexR))
-      #             N_LinkedMale <- N_LinkedMem-N_LinkedFemale
-      #             
-      #             # Create a pool for used male children and female children respectively
-      #             UsedIdFemale <- character()
-      #             UsedIdMale <- character()
-      #             UsedId <- c(UsedIdFemale, UsedIdMale)
-      #             # Create a pool for the used parents
-      #             UsedIdParents <- character()
-      #             
-      #             # get the df for the i the generation
-      #             df_Ngen <- df_Fam[df_Fam$gen==i,]
-      #             # Start to connect children with mother and father
-      #             for (j in 1:sizeGens[i]){
-      #                   # check if the id is used
-      #                   if(! df_Ngen$id[j] %in% UsedId) {
-      #                         if(df_Ngen$sex[j]=="F"){
-      #                               
-      #                         }else {
-      #                               
-      #                         }
-      #                   } else{
-      #                         next
-      #                   }
-      # 
-      #                   
-      #             }
-      #       }
-      # }
+      # Step 2: Let's try to build connection between each two generations
+      df_Fam$ifparent <- FALSE
+      df_Fam$ifson <- FALSE
+      df_Fam$ifdau <- FALSE
+      for (i in 1: Ngen){
+            # generation 1 doesn't need any mother and father
+            if (i == 1) {
+                  df_Ngen <- df_Fam[df_Fam$gen==i,]
+                  df_Ngen$ifparent <- TRUE
+                  df_Ngen$ifson <- FALSE
+                  df_Ngen$ifdau <- FALSE
+                  df_Fam[df_Fam$gen==i,] <- df_Ngen
+            } else {
+                  # calculate the number of couples in the i-1 th generation
+                  N_couples <- (sizeGens[i-1] - sum(is.na(df_Fam$spt[df_Fam$gen == i-1])))*0.5
+                  # calculate the number of members in the i th generation that have a link to the couples in the i-1 th generation
+                  N_LinkedMem <- N_couples*kpc
+                  # decompose the linked members into females and males respectively
+                  N_LinkedFemale <- round(N_LinkedMem*(1-sexR))
+                  N_LinkedMale <- N_LinkedMem-N_LinkedFemale
+
+                  # Create a pool for used male children and female children respectively
+                  UsedIdFemale <- character()
+                  UsedIdMale <- character()
+                  UsedId <- c(UsedIdFemale, UsedIdMale)
+
+                  # get the df for the i the generation
+                  df_Ngen <- df_Fam[df_Fam$gen==i,]
+                  df_Ngen$ifparent <- FALSE
+                  df_Ngen$ifson <- FALSE
+                  df_Ngen$ifdau <- FALSE
+                  df_Ngen$IdCouple <- as.character(NA)
+                  df_Ngen <- df_Ngen[sample(nrow(df_Ngen)),]
+                  # Start to connect children with mother and father
+                  # Step 2.1: mark a group of potential sons and daughters in the i th generation
+                  
+                  # try to rewrite the code
+                  # count the number of couples in the i th gen
+                  countCouple <- (nrow(df_Ngen)-sum(is.na(df_Ngen$spt)))*.5
+                  
+                  # give each member a coupleId
+                  UsedCoupleId <- character()
+                  for (j in 1:sizeGens[i]){
+                        if(df_Ngen$IdCouple[j] %in% UsedCoupleId){
+                              next
+                        } else {
+                              if(is.na(df_Ngen$spt[j])){
+                                    df_Ngen$IdCouple[j] <- as.character(NA)
+                              } else{
+                                    df_Ngen$IdCouple[j] <- paste(sort(c(df_Ngen$id[j], df_Ngen$spt[j]))[1],
+                                                                 sort(c(df_Ngen$id[j], df_Ngen$spt[j]))[2], 
+                                                                 sep = "_")
+                                    UsedCoupleId <- c(UsedCoupleId, df_Ngen$id[j], df_Ngen$spt[j] )
+                              }
+                        }
+                        
+                  }
+                  # get the number of linked female and male children after excluding the single children
+                  # print(N_LinkedMem)
+                  # print(N_LinkedFemale)
+                  # print(N_LinkedMale)
+                  SingleF <- sum(df_Ngen$sex == "F" & is.na(df_Ngen$spt))
+                  CoupleF <- N_LinkedFemale - SingleF
+                  #print(CoupleF)
+                  
+                  SingleM <- sum(df_Ngen$sex == "M" & is.na(df_Ngen$spt))
+                  CoupleM <- N_LinkedMale - SingleM
+                  #print(CoupleM)
+                  # get all couple ids
+                  #print(i)
+                  #print(df_Ngen$IdCouple)
+                  coupleID <- unique(df_Ngen$IdCouple[!is.na(df_Ngen$IdCouple)])
+                  #print(coupleID)
+                  if(i == Ngen){
+                        CoupleF <- 0
+                  }
+                  coupleGirl <- sample(coupleID, CoupleF)
+                  #print(coupleGirl)
+                  coupleBoy <- coupleID[!coupleID %in% coupleGirl]
+                  #print(coupleGirl)
+                  #print(coupleBoy)
+                  # single person should all be sons or daus
+                  # change the ifson and ifdau based on coupleGirl and coupleBoy
+                  for(j in 1:sizeGens[i]){
+                        if(is.na(df_Ngen$spt[j])){
+                              if (df_Ngen$sex[j]=="F"){
+                                    df_Ngen$ifdau[j] <- TRUE
+                                    #UsedId <- c(UsedId, df_Ngen$id[j])
+                              } else {
+                                    df_Ngen$ifson[j] <- TRUE
+                                    #UsedId <- c(UsedId, df_Ngen$id[j])
+                              }
+                        } else{
+                              if(df_Ngen$IdCouple[j] %in% coupleBoy & df_Ngen$sex[j]=="M"){
+                                    df_Ngen$ifson[j] <- TRUE
+                              }else if(df_Ngen$IdCouple[j] %in% coupleGirl & df_Ngen$sex[j]=="F" ){
+                                    df_Ngen$ifdau[j] <- TRUE
+                              }else {
+                                    next
+                              }
+                        }
+                  }
+                  #print(df_Ngen)
+
+                  df_Ngen <- df_Ngen[order(as.numeric(rownames(df_Ngen))),,drop = FALSE]
+                  df_Ngen <- df_Ngen[,-ncol(df_Ngen)]
+                  df_Fam[df_Fam$gen==i,] <- df_Ngen
+                  
+                  # Step 2.2: mark a group of potential parents in the i-1 th generation
+                  df_Ngen <- df_Fam[df_Fam$gen==i-1,]
+                  df_Ngen$ifparent <- FALSE
+                  df_Ngen$ifson <- FALSE
+                  df_Ngen$ifdau <- FALSE
+                  df_Ngen <- df_Ngen[sample(nrow(df_Ngen)),]
+                  # Create a pool for the used parents
+                  UsedIdParents <- character()
+                  
+                  for (k in 1:sizeGens[i-1]){
+                        #first check if the number of married couples surpass the marriage rate
+                        if(sum(df_Ngen$ifparent)/nrow(df_Ngen) >= marR){
+                              break
+                        } else{
+                              #check if the id is used and if the member has married
+                              if(!(df_Ngen$id[k] %in% UsedIdParents) & !is.na(df_Ngen$spt[k])){
+                                    df_Ngen$ifparent[k] <- TRUE
+                                    df_Ngen$ifparent[df_Ngen$spt == df_Ngen$id[k]] <- TRUE
+                                    UsedIdParents <- c(UsedIdParents, df_Ngen$id[k], df_Ngen$spt[k])
+                              }else{
+                                    next
+                              }
+                        }
+                        
+                        
+                  }
+                  
+                  df_Ngen <- df_Ngen[order(as.numeric(rownames(df_Ngen))),,drop = FALSE]
+                  df_Fam[df_Fam$gen==i-1,] <- df_Ngen
+                  
+                  # Step 2.3: connect the i and i-1 th generation
+                  if(i==1){
+                        next
+                  } else {
+                        # get the df for i and i-1 th generations
+                        df_Ngen <- df_Fam[df_Fam$gen %in% c(i,i-1),]
+                        sizeI <- sizeGens[i-1]
+                        sizeII <- sizeGens[i]
+                        # create a vector with ordered ids that should be connected to a parent
+                        #print(df_Ngen)
+                        IdSon <- df_Ngen$id[df_Ngen$ifson == TRUE & df_Ngen$gen==i]
+                        #print(IdSon)
+                        IdDau <- df_Ngen$id[df_Ngen$ifdau == TRUE & df_Ngen$gen==i]
+                        #print(IdDau)
+                        IdOfp <- evenInsert(IdSon, IdDau)
+                        
+                        # create two vectors for maId and paId; replicate the ids to match the same length as IdOfp 
+                        IdMa <- numeric()
+                        IdPa <- numeric()
+                        UsedId <- numeric()
+                  
+                        for(l in 1:sizeI){
+                              # check if the id is used
+                              if(!df_Ngen$id[l] %in% UsedId){
+                                    # check if the member can be a parent
+                                    if(df_Ngen$ifparent[l] == TRUE & df_Ngen$sex[l] == "F"){
+                                          UsedId <- c(UsedId, df_Ngen$id[l], df_Ngen$spt[l])
+                                          IdMa <- c(IdMa, rep(df_Ngen$id[l], kpc))
+                                          IdPa <- c(IdPa, rep(df_Ngen$spt[l], kpc))
+                                    } else if(df_Ngen$ifparent[l] == TRUE & df_Ngen$sex[l] == "M"){
+                                          UsedId <- c(UsedId, df_Ngen$id[l], df_Ngen$spt[l])
+                                          IdPa <- c(IdPa,rep(df_Ngen$id[l], kpc))
+                                          IdMa <- c(IdMa,rep(df_Ngen$spt[l], kpc))
+                                    } else {
+                                          next
+                                    }
+                              } else {
+                                    next
+                              }
+                              
+                        }
+                        
+                        # the length of IdMa and IdPa can be longer than the vector of offspring, so truncated it
+                        #print(IdPa)
+                        #print(IdOfp)
+                        
+                        if (length(IdPa)-length(IdOfp) > 0) {
+                            IdPa <- IdPa[-sample.int(length(IdPa),size =length(IdPa)-length(IdOfp))]
+                        } else if (length(IdPa)-length(IdOfp) < 0) {
+                              IdOfp <- IdOfp[-sample.int(length(IdOfp),size =length(IdOfp)-length(IdPa))]
+                        } 
+                        if (length(IdMa)- length(IdOfp) > 0){
+                            IdMa <- IdMa[-sample.int(length(IdMa),size =length(IdMa)-length(IdOfp))]
+                        }else if (length(IdMa)-length(IdOfp) < 0) {
+                              IdOfp <- IdOfp[-sample.int(length(IdOfp),size =length(IdOfp)-length(IdMa))]
+                        } 
+
+                    
+                        #print(IdPa)
+                        #print(IdOfp)
+                        
+                        # put the IdMa and IdPa into the dfFam with correspondent OfpId
+                        for (m in 1: length(IdOfp)) {
+                              
+                              df_Ngen[df_Ngen$id==IdOfp[m],"pat"] <- IdPa[m]
+                              df_Ngen[df_Ngen$id==IdOfp[m],"mat"] <- IdMa[m]
+                        }
+                        #print(df_Ngen)
+                        df_Fam[df_Fam$gen==i,] <- df_Ngen[df_Ngen$gen==i,]
+                        df_Fam[df_Fam$gen==i-1,] <- df_Ngen[df_Ngen$gen==i-1,]
+                        
+                        
+                  }
+                  
+                  
+                  
+
+
+                  }
+      }
+      
       
 
-      
+      df_Fam <- df_Fam[,1:7]
       print(df_Fam)
       return(df_Fam)
 }
 
-x1 <- SimPed()
+#x1 <- SimPed(kpc = 5, Ngen = 5, marR = .8)
+x2 <- SimPed()
 
+
+x3 <- SimPed(kpc = 5, Ngen = 4)
