@@ -1,0 +1,6 @@
+###code to run first trial of simulation
+
+source("evenInsert.R")
+source("famSizeCal.R")
+source("SimPed.R")
+source("HelperFunctions.R")
