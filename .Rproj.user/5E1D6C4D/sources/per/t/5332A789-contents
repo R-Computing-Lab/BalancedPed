@@ -7,17 +7,18 @@
 ##' @param gen.only logical If true, only computes and returns the "generation" of each ID
 ##' @param verbose logical If true print progress through stages of algorithm
 ##' @details source examplePedigreeFunctions
+library(Matrix)
 
-ped2add <- function(ped, max.gen = Inf, gen.only = FALSE, verbose = FALSE){
-      nr <- nrow(ped)
-      parList <- list()
-      lens <- integer(nr)
-      # is the person in column j the parent of the person in row i? .5 for yes, 0 for no.
-      for (i in 1:nr){
-            x <- ped[i,,drop=FALSE]
-            val <- (as.numeric(x['ID']) == as.numeric(ped$momID)) | (as.numeric())
-      }
-}
+# ped2add <- function(ped, max.gen = Inf, gen.only = FALSE, verbose = FALSE){
+#       nr <- nrow(ped)
+#       parList <- list()
+#       lens <- integer(nr)
+#       # is the person in column j the parent of the person in row i? .5 for yes, 0 for no.
+#       for (i in 1:nr){
+#             x <- ped[i,,drop=FALSE]
+#             val <- (as.numeric(x['ID']) == as.numeric(ped$momID)) | (as.numeric())
+#       }
+# }
 
 
 
@@ -40,12 +41,15 @@ ped2add <- function(ped, max.gen=Inf, gen.only=FALSE, verbose=FALSE){
       #}
       wv <- which(val)
       parList[[i]] <- wv
+      lens[i] <- length(wv)
    }
-   lens[i] <- length(wv)
+   
    if(verbose && !(i %% 100)) { cat(paste0('Done with ', i, ' of ', nr, '\n')) }
    jss <- rep(1L:nr, times=lens)
    iss <- unlist(parList)
    rm(parList, lens)
+   #print(length(iss))
+   print(jss)
    gc()
    isPar <- sparseMatrix(i=iss, j=jss, x=.5, dims=c(nr, nr), dimnames=list(ped$ID, ped$ID)) 
    if(verbose){cat('Completed first degree relatives (adjacency)\n')}
@@ -60,15 +64,18 @@ ped2add <- function(ped, max.gen=Inf, gen.only=FALSE, verbose=FALSE){
    maxCount <- max.gen + 1
    #resl <- list(r, isPar)
    #ris | + A+ A^2 + = (1-A)^-1 from RAM
-   while(mtSum != 0 & count < maxCount){ r<- r + newlsPar
+   while(mtSum != 0 & count < maxCount){ 
+      r<- r + newlsPar
+      #print(r)
+      gen<-gen + (rowSums (newlsPar) > 0) 
+      newlsPar <- newlsPar %*% isPar
+      #dimnames(newlsPar) <- list(ped$ID, ped$ID)
+      mtSum <- sum(newlsPar) 
+      count <- count + 1
+      # resl <- c(resl, list(newlsPar))
+      if(verbose){cat(paste0('Completed', count-1, ' degree relatives\n'))}
    }
-   gen<-gen + (rowSums (newlsPar) > 0) 
-   newlsPar <- newlsPar %*% isPar
-   #dimnames(newlsPar) <- list(ped$ID, ped$ID)
-   mtSum <- sum(newlsPar) 
-   count <- count + 1
-   # resl <- c(resl, list(newlsPar))
-   if(verbose){cat(paste0('Completed', count-1, ' degree relatives\n'))}
+
    if(verbose){cat('About to do RAM path tracing\n')}
    # compute rsq <- r %*% sqrt(diag(isChild))
    # compute rel <- tcrossprod(rsq)
@@ -184,14 +191,15 @@ ped2mt_v3 <- function(ped, max.gen=Inf){
    count <- 0
    maxCount <- max.gen + 1
    while(mtSum != 0 & count < maxCount){
+      r <- r + newlsMom
+      newlsMom <- newlsMom %*% isMom
+      mtSum <- - sum(newlsMom)
+      count <- count + 1
    }
-   r <- r + newlsMom
-   newlsMom <- newlsMom %*% isMom
-   mtSum <- - sum(newlsMom)
-   count <- count + 1
    r <- r %*% t(r)
    r[r > 0] <- 1
    return(r)
 }
+
 
 

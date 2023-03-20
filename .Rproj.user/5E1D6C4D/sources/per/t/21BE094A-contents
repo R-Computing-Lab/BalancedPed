@@ -32,7 +32,7 @@ SimPed <- function(kpc = 3,
       
       # Step 1: Let's build the connection within each generation first
       for (i in 1: Ngen) {
-            idGen <- paste(i,"-",1:sizeGens[i],sep = "")
+            idGen <- as.numeric(paste(100,i,1:sizeGens[i],sep = ""))
             # idGen <- ifelse(i==1,
             #                 paste(i,"-",1:sizeGens[i]), 
             #                 paste(i,"-",sizeGens[i-1]:sizeGens[i]))
@@ -383,13 +383,14 @@ SimPed <- function(kpc = 3,
       
 
       df_Fam <- df_Fam[,1:7]
-      colnames(df_Fam) <- c()
+      df_Fam <- df_Fam[!(is.na(df_Fam$pat)&is.na(df_Fam$mat)&is.na(df_Fam$spt)),]
+      colnames(df_Fam)[c(2,4,5)] <- c("ID", "dadID", "momID")
       print(df_Fam)
       return(df_Fam)
 }
 
-#x1 <- SimPed(kpc = 5, Ngen = 5, marR = .8)
-x2 <- SimPed()
+x1 <- SimPed(kpc = 5, Ngen = 6)
+#x2 <- SimPed()
 
 
-#x3 <- SimPed(kpc = 5, Ngen = 4)
+x3 <- SimPed(kpc = 5, Ngen = 4)
