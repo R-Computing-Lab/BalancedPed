@@ -389,8 +389,8 @@ SimPed <- function(kpc = 3,
       return(df_Fam)
 }
 
-x1 <- SimPed(kpc = 5, Ngen = 6)
+#x1 <- SimPed(kpc = 5, Ngen = 6)
 #x2 <- SimPed()
 
 
-x3 <- SimPed(kpc = 5, Ngen = 4)
+#x3 <- SimPed(kpc = 5, Ngen = 4)
