@@ -8,7 +8,7 @@ source("~/R-Project/BalancedPed/HelperFunctions.R")
 
 library(OpenMx)
 
-sampleFam <- SimPed(kpc = 3, Ngen = 5, sexR = .5, marR = 2/3)
+sampleFam <- SimPed(kpc = 3, Ngen = 4, sexR = .5, marR = 2/3)
 Addmat <- as.matrix(ped2add(sampleFam, verbose = TRUE))
 Nucmat <- ped2cn(sampleFam)
 Extmat <- ped2ce(sampleFam)
@@ -31,7 +31,7 @@ ee2 <- c(.05, .1,.19,.25,.30,.39,.45,.50,.59, .2, .2, .2)
 ## generate data
 library(mvtnorm)
 
-comb <- 1
+comb <- 11
 
 sumCov <- ad2[comb]*Addmat + dd2[comb]*Addmat*Addmat + cn2[comb]*Nucmat + ce2[comb]*Extmat + mt2[comb]*Mtdmat + am2[comb]*Addmat*Mtdmat + ee2[comb]*Envmat
 set.seed(14271)
