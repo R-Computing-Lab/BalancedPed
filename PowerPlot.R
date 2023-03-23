@@ -4,10 +4,13 @@
 ## Run all the scripts
 for (p in 1: 11){
       for (c in 1: 11){
-            dir <- paste0("~/R-Project/BalancedPed/p",p,"c",c)
+            dir <- paste0("~/R-Project/BalancedPed/Simulations/p",p,"/p",p, "c",c)
             if (dir.exists(dir)){
+                  starttime <- Sys.time()
+                  cat("running", dir)
                   setwd(dir)
                   source(paste0("p",p,"c",c,".R"))
+                  cat(dir, "finished. Time used:",starttime, "~", Sys.time())
             }else{
                   next
             }

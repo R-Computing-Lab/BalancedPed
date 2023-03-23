@@ -385,7 +385,7 @@ SimPed <- function(kpc = 3,
       df_Fam <- df_Fam[,1:7]
       df_Fam <- df_Fam[!(is.na(df_Fam$pat)&is.na(df_Fam$mat)&is.na(df_Fam$spt)),]
       colnames(df_Fam)[c(2,4,5)] <- c("ID", "dadID", "momID")
-      print(df_Fam)
+      #print(df_Fam)
       return(df_Fam)
 }
 
