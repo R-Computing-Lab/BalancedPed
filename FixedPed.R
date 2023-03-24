@@ -1,8 +1,8 @@
 ### generate 11 fixed ped and save them into a r data file ot used for simulation
 
-source("~/R-Project/BalancedPed/evenInsert.R")
-source("~/R-Project/BalancedPed/famSizeCal.R")
-source("~/R-Project/BalancedPed/SimPed.R")
+#source("~/R-Project/BalancedPed/evenInsert.R")
+#source("~/R-Project/BalancedPed/famSizeCal.R")
+#source("~/R-Project/BalancedPed/SimPed.R")
 
 set.seed(1327)
 ped1 <- SimPed(2,4,.5,2/3)

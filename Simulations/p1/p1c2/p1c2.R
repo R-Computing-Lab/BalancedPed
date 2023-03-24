@@ -2,15 +2,16 @@
 
 
 
-source("~/R-Project/BalancedPed/evenInsert.R")
-source("~/R-Project/BalancedPed/famSizeCal.R")
-source("~/R-Project/BalancedPed/SimPed.R")
+#source("~/R-Project/BalancedPed/evenInsert.R")
+#source("~/R-Project/BalancedPed/famSizeCal.R")
+#source("~/R-Project/BalancedPed/SimPed.R")
 source("~/R-Project/BalancedPed/HelperFunctions.R")
 
 library(OpenMx)
 
+load("~/R-Project/BalancedPed/FixedPed.RData")
+sampleFam <- ped1
 
-sampleFam <- SimPed(kpc = 2, Ngen = 4, sexR = .5, marR = 2/3)
 Addmat <- as.matrix(ped2add(sampleFam, verbose = TRUE))
 Nucmat <- ped2cn(sampleFam)
 Extmat <- ped2ce(sampleFam)
