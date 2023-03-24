@@ -38,7 +38,7 @@ set.seed(14271)
 numfam <- round(10000/nrow(Addmat))
 dat <- rmvnorm(numfam, sigma = sumCov)
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 # fit ML model
 
 totalVar <- 1
