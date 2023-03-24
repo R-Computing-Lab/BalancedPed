@@ -6,70 +6,70 @@ powerCal <- function(lamda,df){
       
 }
 my_palette <- c("#377EB8", "#E69F00", "#4DAF4A", "#984EA3",  "#56B4E9", "#A6CE39", "#A9A9A9", "#E41A1C")
-num_ped <- 20
+num_ped <- 200
 
 ### create a new enviroment for one condition
-env_p8c2 <- new.env()
-load("~/R-Project/BalancedPed/Simulations/p8/p8c2/modelSmr.Rdata", envir = env_p8c2)
+env_p6c2 <- new.env()
+load("~/R-Project/BalancedPed/Simulations/p6/p6c2/modelSmr.Rdata", envir = env_p6c2)
 
-meanDiffLL_mtam_p8c2 <- env_p8c2$smr2$Minus2LogLikelihood - env_p8c2$smr1$Minus2LogLikelihood
-lamdaUnit_p8c2 <- meanDiffLL_mtam_p8c2/env_p8c2$smr1$numObs
-SSize_p8c2 <- 1: num_ped
-LamdaVec_p8c2 <- lamdaUnit_p8c2*SSize_p8c2
-powVec_p8c2 <- as.numeric(lapply(LamdaVec_p8c2,powerCal, df = 2))
+meanDiffLL_mtam_p6c2 <- env_p6c2$smr2$Minus2LogLikelihood - env_p6c2$smr1$Minus2LogLikelihood
+lamdaUnit_p6c2 <- meanDiffLL_mtam_p6c2/env_p6c2$smr1$numObs
+SSize_p6c2 <- 1: num_ped
+LamdaVec_p6c2 <- lamdaUnit_p6c2*SSize_p6c2
+powVec_p6c2 <- as.numeric(lapply(LamdaVec_p6c2,powerCal, df = 2))
 
-df_p8c2 <- data.frame(Nped = SSize_p8c2, 
-                      power = powVec_p8c2, 
+df_p6c2 <- data.frame(Nped = SSize_p6c2, 
+                      power = powVec_p6c2, 
                       Combination = rep("power1", num_ped))
 
 ### create a new enviroment for one condition
-env_p8c5 <- new.env()
-load("~/R-Project/BalancedPed/Simulations/p8/p8c5/modelSmr.Rdata", envir = env_p8c5)
+env_p6c5 <- new.env()
+load("~/R-Project/BalancedPed/Simulations/p6/p6c5/modelSmr.Rdata", envir = env_p6c5)
 
-meanDiffLL_mtam_p8c5 <- env_p8c5$smr2$Minus2LogLikelihood - env_p8c5$smr1$Minus2LogLikelihood
-lamdaUnit_p8c5 <- meanDiffLL_mtam_p8c5/env_p8c5$smr1$numObs
-SSize_p8c5 <- 1: num_ped
-LamdaVec_p8c5 <- lamdaUnit_p8c5*SSize_p8c5
-powVec_p8c5 <- as.numeric(lapply(LamdaVec_p8c5,powerCal, df = 2))
+meanDiffLL_mtam_p6c5 <- env_p6c5$smr2$Minus2LogLikelihood - env_p6c5$smr1$Minus2LogLikelihood
+lamdaUnit_p6c5 <- meanDiffLL_mtam_p6c5/env_p6c5$smr1$numObs
+SSize_p6c5 <- 1: num_ped
+LamdaVec_p6c5 <- lamdaUnit_p6c5*SSize_p6c5
+powVec_p6c5 <- as.numeric(lapply(LamdaVec_p6c5,powerCal, df = 2))
 
-df_p8c5 <- data.frame(Nped = SSize_p8c5, 
-                      power = powVec_p8c5, 
+df_p6c5 <- data.frame(Nped = SSize_p6c5, 
+                      power = powVec_p6c5, 
                       Combination = rep("power2", num_ped))
 
 ### create a new enviroment for one condition
-env_p8c8 <- new.env()
-load("~/R-Project/BalancedPed/Simulations/p8/p8c8/modelSmr.Rdata", envir = env_p8c8)
+env_p6c8 <- new.env()
+load("~/R-Project/BalancedPed/Simulations/p6/p6c8/modelSmr.Rdata", envir = env_p6c8)
 
-meanDiffLL_mtam_p8c8 <- env_p8c8$smr2$Minus2LogLikelihood - env_p8c8$smr1$Minus2LogLikelihood
-lamdaUnit_p8c8 <- meanDiffLL_mtam_p8c8/env_p8c8$smr1$numObs
-SSize_p8c8 <- 1: num_ped
-LamdaVec_p8c8 <- lamdaUnit_p8c8*SSize_p8c8
-powVec_p8c8 <- as.numeric(lapply(LamdaVec_p8c8,powerCal, df = 2))
+meanDiffLL_mtam_p6c8 <- env_p6c8$smr2$Minus2LogLikelihood - env_p6c8$smr1$Minus2LogLikelihood
+lamdaUnit_p6c8 <- meanDiffLL_mtam_p6c8/env_p6c8$smr1$numObs
+SSize_p6c8 <- 1: num_ped
+LamdaVec_p6c8 <- lamdaUnit_p6c8*SSize_p6c8
+powVec_p6c8 <- as.numeric(lapply(LamdaVec_p6c8,powerCal, df = 2))
 
-df_p8c8 <- data.frame(Nped = SSize_p8c8, 
-                      power = powVec_p8c8, 
+df_p6c8 <- data.frame(Nped = SSize_p6c8, 
+                      power = powVec_p6c8, 
                       Combination = rep("power3", num_ped))
 
 ### create a new enviroment for one condition
-env_p8c11 <- new.env()
-load("~/R-Project/BalancedPed/Simulations/p8/p8c11/modelSmr.Rdata", envir = env_p8c11)
+env_p6c11 <- new.env()
+load("~/R-Project/BalancedPed/Simulations/p6/p6c11/modelSmr.Rdata", envir = env_p6c11)
 
-meanDiffLL_mtam_p8c11 <- env_p8c11$smr2$Minus2LogLikelihood - env_p8c11$smr1$Minus2LogLikelihood
-lamdaUnit_p8c11 <- meanDiffLL_mtam_p8c11/env_p8c11$smr1$numObs
-SSize_p8c11 <- 1: num_ped
-LamdaVec_p8c11 <- lamdaUnit_p8c11*SSize_p8c11
-powVec_p8c11 <- as.numeric(lapply(LamdaVec_p8c11,powerCal, df = 2))
+meanDiffLL_mtam_p6c11 <- env_p6c11$smr2$Minus2LogLikelihood - env_p6c11$smr1$Minus2LogLikelihood
+lamdaUnit_p6c11 <- meanDiffLL_mtam_p6c11/env_p6c11$smr1$numObs
+SSize_p6c11 <- 1: num_ped
+LamdaVec_p6c11 <- lamdaUnit_p6c11*SSize_p6c11
+powVec_p6c11 <- as.numeric(lapply(LamdaVec_p6c11,powerCal, df = 2))
 
-df_p8c11 <- data.frame(Nped = SSize_p8c11, 
-                       power = powVec_p8c11, 
+df_p6c11 <- data.frame(Nped = SSize_p6c11, 
+                       power = powVec_p6c11, 
                        Combination = rep("power4", num_ped))
 
 ### create a data frame for graphs
-df_p8 <- rbind(df_p8c2, df_p8c5, df_p8c8, df_p8c11)
-df_p8$Combination <- as.factor(df_p8$Combination)
+df_p6 <- rbind(df_p6c2, df_p6c5, df_p6c8, df_p6c11)
+df_p6$Combination <- as.factor(df_p6$Combination)
 
 
-g1 <-ggplot(data = df_p8)+ geom_line(mapping = aes(x = Nped, y = power, color= Combination), size = 1.5) +
+g1 <-ggplot(data = df_p6)+ geom_line(mapping = aes(x = Nped, y = power, color= Combination), size = 1.5) +
       scale_color_manual(values=my_palette[1:4],
                          name="Variance Combinations",
                          breaks=c("power1", "power2", "power3","power4"),
@@ -101,5 +101,5 @@ g1 <-ggplot(data = df_p8)+ geom_line(mapping = aes(x = Nped, y = power, color= C
 # annotate(geom = "text",x = 0.9, y =.6, label = "a\u00B2 = .4, d\u00B2 = .1", family="Calibri", color = "gray40",size = 3)
 g1
 
-ggsave( "~/R-Project/BalancedPed/Simulations/p8/graph1.png",g1, width = 6, height = 4.5,  type = "cairo-png", dpi = 900)
-rm(list = ls())
+ggsave( "~/R-Project/BalancedPed/Simulations/p6/graph1.png",g1, width = 6, height = 4.5,  type = "cairo-png", dpi = 900)
+#rm(list = ls())

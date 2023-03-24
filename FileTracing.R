@@ -3,7 +3,10 @@ library("purrr")
 
 # Specify the folder path and pattern to search
 folder_path <- dirname(rstudioapi::getActiveDocumentContext()$path)
-#pattern <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
+pattern1 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
+pattern2 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
+pattern3 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
+pattern4 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
 
 # Function to comment out lines matching the pattern in a file
 comment_matching_lines <- function(file_path, pattern) {
