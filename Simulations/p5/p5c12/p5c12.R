@@ -5,7 +5,7 @@
 #source("~/R-Project/BalancedPed/famSizeCal.R")
 #source("~/R-Project/BalancedPed/SimPed.R")
 source("~/R-Project/BalancedPed/HelperFunctions.R")
-setwd("~/R-Project/BalancedPed/Simulations/p5/p5c12")
+#setwd("~/R-Project/BalancedPed/Simulations/p5/p5c12")
 
 library(OpenMx)
 load("~/R-Project/BalancedPed/FixedPed.RData")

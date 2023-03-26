@@ -1,7 +1,7 @@
 ### this is a script to generate power plots for the simulation results
 
 run_protected_loop <- function(){
-      for (p in 1: 11){
+      for (p in 1: 7){
             for (c in 1: 11){
                   dir <- paste0("~/R-Project/BalancedPed/Simulations/p",p,"/p",p, "c",c)
                   if (dir.exists(dir)){
