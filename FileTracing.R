@@ -7,6 +7,9 @@ pattern1 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
 pattern2 <- "~/R-Project/BalancedPed/evenInsert.R"
 pattern3 <- "~/R-Project/BalancedPed/famSizeCal.R"
 pattern4 <- "~/R-Project/BalancedPed/SimPed.R"
+pattern5 <- "mxMatrix(type = \"Full\", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = \"vdd\", name = \"Vdd\", lbound = 1e-10)"
+pattern6 <- "mxMatrix(\"Symm\", nrow=fsize, ncol=fsize, values=Dmgmat, name=\"D\"), "
+pattern7 <- "+ (D %x% ModelOne.Vdd)"
 
 # Function to comment out lines matching the pattern in a file
 comment_matching_lines <- function(file_path, pattern) {

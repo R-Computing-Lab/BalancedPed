@@ -6,7 +6,7 @@ powerCal <- function(lamda,df){
       
 }
 my_palette <- c("#377EB8", "#E69F00", "#4DAF4A", "#984EA3",  "#56B4E9", "#A6CE39", "#A9A9A9", "#E41A1C")
-num_ped <- 1000
+num_ped <- 700
 
 ### create a new enviroment for one condition
 env_p1c2 <- new.env()
