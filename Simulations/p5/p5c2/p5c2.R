@@ -50,7 +50,7 @@ ObjectsKeep <- as.character(ls())
 Model1 <- mxModel(
       "ModelOne",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
@@ -73,7 +73,7 @@ for(afam in 1:numfam){
                                  mxMatrix("Iden", nrow=fsize, ncol=fsize, name="I"), 
                                  mxMatrix("Unit", nrow=fsize, ncol=fsize, name='U'),
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Addmat, name="A"), 
-                                 mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Dmgmat, name="D"), 
+##                                 mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Dmgmat, name="D"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Nucmat, name="Cn"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Extmat, name="Ce"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Amimat, name="Am"), 
@@ -82,7 +82,7 @@ for(afam in 1:numfam){
                                  mxMatrix('Full', nrow=1, ncol=fsize, name='M', free=TRUE, labels='meanLI',
                                           dimnames=list(NULL, ytemp)),
                                  mxAlgebra ((A %x% ModelOne.Vad) 
-                                            + (D %x% ModelOne.Vdd) 
+##                                            + (D %x% ModelOne.Vdd) 
                                             + (Cn %x% ModelOne.Vcn) 
                                             + (U %x% ModelOne.Vce) 
                                             + (Mt %x% ModelOne.Vmt) 
@@ -109,7 +109,7 @@ rm(list = setdiff(ls(), c(ObjectsKeep, "ObjectsKeep", "smr1")))
 Model4 <- mxModel(
       "ModelThree",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       #mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
@@ -132,7 +132,7 @@ for(afam2 in 1:numfam){
                                    mxMatrix("Iden", nrow=fsize2, ncol=fsize2, name="I"), 
                                    mxMatrix("Unit", nrow=fsize2, ncol=fsize2, name='U'),
                                    mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Addmat, name="A"), 
-                                   mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Dmgmat, name="D"), 
+#                                   mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Dmgmat, name="D"), 
                                    mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Nucmat, name="Cn"), 
                                    mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Extmat, name="Ce"), 
                                    #mxMatrix("Symm", nrow=fsize2, ncol=fsize2, values=Amimat, name="Am"), 
@@ -141,7 +141,7 @@ for(afam2 in 1:numfam){
                                    mxMatrix('Full', nrow=1, ncol=fsize2, name='M', free=TRUE, labels='meanLI',
                                             dimnames=list(NULL, ytemp2)),
                                    mxAlgebra ((A %x% ModelThree.Vad) 
-                                              + (D %x% ModelThree.Vdd) 
+#                                              + (D %x% ModelThree.Vdd) 
                                               + (Cn %x% ModelThree.Vcn) 
                                               + (U %x% ModelThree.Vce) 
                                               #+ (Mt %x% ModelThree.Vmt) 
@@ -166,7 +166,7 @@ rm(list = setdiff(ls(), c(ObjectsKeep,"ObjectsKeep", "smr1", "smr2")))
 Model5 <- mxModel(
       "ModelFive",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       #mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
@@ -189,7 +189,7 @@ for(afam3 in 1:numfam){
                                    mxMatrix("Iden", nrow=fsize3, ncol=fsize3, name="I"), 
                                    mxMatrix("Unit", nrow=fsize3, ncol=fsize3, name='U'),
                                    mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Addmat, name="A"), 
-                                   mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Dmgmat, name="D"), 
+#                                   mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Dmgmat, name="D"), 
                                    mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Nucmat, name="Cn"), 
                                    mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Extmat, name="Ce"), 
                                    mxMatrix("Symm", nrow=fsize3, ncol=fsize3, values=Amimat, name="Am"), 
@@ -198,7 +198,7 @@ for(afam3 in 1:numfam){
                                    mxMatrix('Full', nrow=1, ncol=fsize3, name='M', free=TRUE, labels='meanLI',
                                             dimnames=list(NULL, ytemp3)),
                                    mxAlgebra ((A %x% ModelFive.Vad) 
-                                              + (D %x% ModelFive.Vdd) 
+#                                              + (D %x% ModelFive.Vdd) 
                                               + (Cn %x% ModelFive.Vcn) 
                                               + (U %x% ModelFive.Vce) 
                                               #+ (Mt %x% ModelFive.Vmt) 
@@ -224,7 +224,7 @@ rm(list = setdiff(ls(), c(ObjectsKeep,"ObjectsKeep", "smr1", "smr2", "smr3")))
 Model7 <- mxModel(
       "ModelSeven",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
@@ -247,7 +247,7 @@ for(afam4 in 1:numfam){
                                    mxMatrix("Iden", nrow=fsize4, ncol=fsize4, name="I"), 
                                    mxMatrix("Unit", nrow=fsize4, ncol=fsize4, name='U'),
                                    mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Addmat, name="A"), 
-                                   mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Dmgmat, name="D"), 
+#                                   mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Dmgmat, name="D"), 
                                    mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Nucmat, name="Cn"), 
                                    mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Extmat, name="Ce"), 
                                    #mxMatrix("Symm", nrow=fsize4, ncol=fsize4, values=Amimat, name="Am"), 
@@ -256,7 +256,7 @@ for(afam4 in 1:numfam){
                                    mxMatrix('Full', nrow=1, ncol=fsize4, name='M', free=TRUE, labels='meanLI',
                                             dimnames=list(NULL, ytemp4)),
                                    mxAlgebra ((A %x% ModelSeven.Vad) 
-                                              + (D %x% ModelSeven.Vdd) 
+#                                              + (D %x% ModelSeven.Vdd) 
                                               + (Cn %x% ModelSeven.Vcn) 
                                               + (U %x% ModelSeven.Vce) 
                                               + (Mt %x% ModelSeven.Vmt) 

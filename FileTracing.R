@@ -7,14 +7,16 @@ pattern1 <- "setwd(dirname(rstudioapi::getActiveDocumentContext()$path))"
 pattern2 <- "~/R-Project/BalancedPed/evenInsert.R"
 pattern3 <- "~/R-Project/BalancedPed/famSizeCal.R"
 pattern4 <- "~/R-Project/BalancedPed/SimPed.R"
-pattern5 <- "mxMatrix(type = \"Full\", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = \"vdd\", name = \"Vdd\", lbound = 1e-10)"
-pattern6 <- "mxMatrix(\"Symm\", nrow=fsize, ncol=fsize, values=Dmgmat, name=\"D\"), "
-pattern7 <- "+ (D %x% ModelOne.Vdd)"
+pattern5 <- 'labels = "vdd"'
+pattern6 <- 'name="D"'
+pattern7 <- 'D %x%'
 
 # Function to comment out lines matching the pattern in a file
 comment_matching_lines <- function(file_path, pattern) {
     lines <- readLines(file_path)
+    
     matching_lines <- grep(pattern, lines)
+    print(matching_lines)
     
     if (length(matching_lines) > 0) {
         lines[matching_lines] <- paste0("#", lines[matching_lines])
@@ -40,11 +42,11 @@ comment_matching_lines <- function(file_path, pattern) {
 # # Comment out the lines matching the pattern in all .R files
 # walk(r_files, comment_matching_lines, pattern = pattern3)
 # 
-# # Find all .R files in the folder and subfolders
-# r_files <- dir_ls(folder_path, regexp = "\\.R$", recurse = TRUE, fail = FALSE)
-# 
-# # Comment out the lines matching the pattern in all .R files
-# walk(r_files, comment_matching_lines, pattern = pattern4)
+# Find all .R files in the folder and subfolders
+r_files <- dir_ls(folder_path, regexp = "\\.R$", recurse = TRUE)
+
+# Comment out the lines matching the pattern in all .R files
+walk(r_files, comment_matching_lines, pattern = pattern7)
 
 
 

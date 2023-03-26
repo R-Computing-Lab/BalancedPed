@@ -142,7 +142,7 @@ for(afam2 in 1:numfam){
                                    mxMatrix('Full', nrow=1, ncol=fsize2, name='M', free=TRUE, labels='meanLI',
                                             dimnames=list(NULL, ytemp2)),
                                    mxAlgebra ((A %x% ModelThree.Vad) 
-                                              + (D %x% ModelThree.Vdd) 
+#                                              + (D %x% ModelThree.Vdd) 
                                               + (Cn %x% ModelThree.Vcn) 
                                               + (U %x% ModelThree.Vce) 
                                               #+ (Mt %x% ModelThree.Vmt) 
