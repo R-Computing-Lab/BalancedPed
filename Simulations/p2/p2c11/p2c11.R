@@ -51,7 +51,7 @@ ObjectsKeep <- as.character(ls())
 Model1 <- mxModel(
       "ModelOne",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
@@ -74,7 +74,7 @@ for(afam in 1:numfam){
                                  mxMatrix("Iden", nrow=fsize, ncol=fsize, name="I"), 
                                  mxMatrix("Unit", nrow=fsize, ncol=fsize, name='U'),
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Addmat, name="A"), 
-##                                 mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Dmgmat, name="D"), 
+                                 mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Dmgmat, name="D"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Nucmat, name="Cn"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Extmat, name="Ce"), 
                                  mxMatrix("Symm", nrow=fsize, ncol=fsize, values=Amimat, name="Am"), 
@@ -83,7 +83,7 @@ for(afam in 1:numfam){
                                  mxMatrix('Full', nrow=1, ncol=fsize, name='M', free=TRUE, labels='meanLI',
                                           dimnames=list(NULL, ytemp)),
                                  mxAlgebra ((A %x% ModelOne.Vad) 
-##                                            + (D %x% ModelOne.Vdd) 
+                                            + (D %x% ModelOne.Vdd) 
                                             + (Cn %x% ModelOne.Vcn) 
                                             + (U %x% ModelOne.Vce) 
                                             + (Mt %x% ModelOne.Vmt) 
@@ -110,7 +110,7 @@ rm(list = setdiff(ls(), c(ObjectsKeep, "ObjectsKeep", "smr1")))
 Model4 <- mxModel(
       "ModelThree",
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ad2[comb]*totalVar, labels = "vad", name = "Vad", lbound = 1e-10),
-#      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
+      mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = dd2[comb]*totalVar, labels = "vdd", name = "Vdd", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = cn2[comb]*totalVar, labels = "vcn", name = "Vcn", lbound = 1e-10),
       mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = ce2[comb]*totalVar, labels = "vce", name = "Vce", lbound = 1e-10),
       #mxMatrix(type = "Full", nrow = 1, ncol = 1, free = TRUE, values = mt2[comb]*totalVar, labels = "vmt", name = "Vmt", lbound = 1e-10),
