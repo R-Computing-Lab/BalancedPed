@@ -5,23 +5,41 @@ powerCal <- function(lamda,df){
       1- pchisq(qchisq(1-.05, df), df, lamda)
       
 }
-my_palette <- c("#377EB8", "#E69F00", "#4DAF4A", "#117A65", "#56B4E9", "#A6CE39", "#A9A9A9", "#E41A1C", "#88CCEE", "#CC6677", "#DDCC77", "#AA4499", "#332288",  "#999933", "#882255", "#984EA3")
+my_palette <- c("#E69F00", 
+                "#DDCC77", 
+                "#999933", 
+                "#A6CE39",
+                
+                "#E41A1C",
+                "#882255", 
+                "#984EA3",
+                "#AA0499", 
+                "#CC6677", 
+                "#377EB8",
+                "#56B4E9", 
+                "#88CCEE",
+
+
+                "#4DAF4A",            
+                "#A9A9A9", 
+                "#117A65")
 
 num_ped <- 200
+num_ped1 <- 201
 
 ### create a new enviroment for one condition
 env_p5c1 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c1/modelSmr.Rdata", envir = env_p5c1)
 
 meanDiffLL_mtam_p5c1 <- env_p5c1$smr2$Minus2LogLikelihood - env_p5c1$smr1$Minus2LogLikelihood
-lamdaUnit_p5c1 <- meanDiffLL_mtam_p5c1/env_p5c1$smr1$numObs
-SSize_p5c1 <- 1: num_ped
+lamdaUnit_p5c1 <- (meanDiffLL_mtam_p5c1/env_p5c1$smr1$numObs) * .95 
+SSize_p5c1 <- 0: num_ped
 LamdaVec_p5c1 <- lamdaUnit_p5c1*SSize_p5c1
 powVec_p5c1 <- as.numeric(lapply(LamdaVec_p5c1,powerCal, df = 2))
 
 df_p5c1 <- data.frame(Nped = SSize_p5c1, 
                       power = powVec_p5c1, 
-                      Combination = rep("power1", num_ped))
+                      Combination = rep("power1", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c2 <- new.env()
@@ -29,13 +47,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c2/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c2 <- env_p5c2$smr2$Minus2LogLikelihood - env_p5c2$smr1$Minus2LogLikelihood
 lamdaUnit_p5c2 <- meanDiffLL_mtam_p5c2/env_p5c2$smr1$numObs
-SSize_p5c2 <- 1: num_ped
+SSize_p5c2 <- 0: num_ped
 LamdaVec_p5c2 <- lamdaUnit_p5c2*SSize_p5c2
 powVec_p5c2 <- as.numeric(lapply(LamdaVec_p5c2,powerCal, df = 2))
 
 df_p5c2 <- data.frame(Nped = SSize_p5c2, 
                       power = powVec_p5c2, 
-                      Combination = rep("power2", num_ped))
+                      Combination = rep("power2", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c3 <- new.env()
@@ -43,13 +61,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c3/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c3 <- env_p5c3$smr2$Minus2LogLikelihood - env_p5c3$smr1$Minus2LogLikelihood
 lamdaUnit_p5c3 <- meanDiffLL_mtam_p5c3/env_p5c3$smr1$numObs
-SSize_p5c3 <- 1: num_ped
+SSize_p5c3 <- 0: num_ped
 LamdaVec_p5c3 <- lamdaUnit_p5c3*SSize_p5c3
 powVec_p5c3 <- as.numeric(lapply(LamdaVec_p5c3,powerCal, df = 2))
 
 df_p5c3 <- data.frame(Nped = SSize_p5c3, 
                       power = powVec_p5c3, 
-                      Combination = rep("power3", num_ped))
+                      Combination = rep("power3", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c4 <- new.env()
@@ -57,13 +75,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c4/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c4 <- env_p5c4$smr2$Minus2LogLikelihood - env_p5c4$smr1$Minus2LogLikelihood
 lamdaUnit_p5c4 <- meanDiffLL_mtam_p5c4/env_p5c4$smr1$numObs
-SSize_p5c4 <- 1: num_ped
+SSize_p5c4 <- 0: num_ped
 LamdaVec_p5c4 <- lamdaUnit_p5c4*SSize_p5c4
 powVec_p5c4 <- as.numeric(lapply(LamdaVec_p5c4,powerCal, df = 2))
 
 df_p5c4 <- data.frame(Nped = SSize_p5c4, 
                       power = powVec_p5c4, 
-                      Combination = rep("power4", num_ped))
+                      Combination = rep("power4", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c5 <- new.env()
@@ -71,13 +89,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c5/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c5 <- env_p5c5$smr2$Minus2LogLikelihood - env_p5c5$smr1$Minus2LogLikelihood
 lamdaUnit_p5c5 <- meanDiffLL_mtam_p5c5/env_p5c5$smr1$numObs
-SSize_p5c5 <- 1: num_ped
+SSize_p5c5 <- 0: num_ped
 LamdaVec_p5c5 <- lamdaUnit_p5c5*SSize_p5c5
 powVec_p5c5 <- as.numeric(lapply(LamdaVec_p5c5,powerCal, df = 2))
 
 df_p5c5 <- data.frame(Nped = SSize_p5c5, 
                       power = powVec_p5c5, 
-                      Combination = rep("power5", num_ped))
+                      Combination = rep("power5", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c6 <- new.env()
@@ -85,13 +103,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c6/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c6 <- env_p5c6$smr2$Minus2LogLikelihood - env_p5c6$smr1$Minus2LogLikelihood
 lamdaUnit_p5c6 <- meanDiffLL_mtam_p5c6/env_p5c6$smr1$numObs
-SSize_p5c6 <- 1: num_ped
+SSize_p5c6 <- 0: num_ped
 LamdaVec_p5c6 <- lamdaUnit_p5c6*SSize_p5c6
 powVec_p5c6 <- as.numeric(lapply(LamdaVec_p5c6,powerCal, df = 2))
 
 df_p5c6 <- data.frame(Nped = SSize_p5c6, 
                       power = powVec_p5c6, 
-                      Combination = rep("power6", num_ped))
+                      Combination = rep("power6", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c7 <- new.env()
@@ -99,13 +117,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c7/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c7 <- env_p5c7$smr2$Minus2LogLikelihood - env_p5c7$smr1$Minus2LogLikelihood
 lamdaUnit_p5c7 <- meanDiffLL_mtam_p5c7/env_p5c7$smr1$numObs
-SSize_p5c7 <- 1: num_ped
+SSize_p5c7 <- 0: num_ped
 LamdaVec_p5c7 <- lamdaUnit_p5c7*SSize_p5c7
 powVec_p5c7 <- as.numeric(lapply(LamdaVec_p5c7,powerCal, df = 2))
 
 df_p5c7 <- data.frame(Nped = SSize_p5c7, 
                       power = powVec_p5c7, 
-                      Combination = rep("power7", num_ped))
+                      Combination = rep("power7", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c8 <- new.env()
@@ -113,13 +131,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c8/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c8 <- env_p5c8$smr2$Minus2LogLikelihood - env_p5c8$smr1$Minus2LogLikelihood
 lamdaUnit_p5c8 <- meanDiffLL_mtam_p5c8/env_p5c8$smr1$numObs
-SSize_p5c8 <- 1: num_ped
+SSize_p5c8 <- 0: num_ped
 LamdaVec_p5c8 <- lamdaUnit_p5c8*SSize_p5c8
 powVec_p5c8 <- as.numeric(lapply(LamdaVec_p5c8,powerCal, df = 2))
 
 df_p5c8 <- data.frame(Nped = SSize_p5c8, 
                       power = powVec_p5c8, 
-                      Combination = rep("power8", num_ped))
+                      Combination = rep("power8", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c9 <- new.env()
@@ -127,13 +145,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c9/modelSmr.Rdata", envir = env_p
 
 meanDiffLL_mtam_p5c9 <- env_p5c9$smr2$Minus2LogLikelihood - env_p5c9$smr1$Minus2LogLikelihood
 lamdaUnit_p5c9 <- meanDiffLL_mtam_p5c9/env_p5c9$smr1$numObs
-SSize_p5c9 <- 1: num_ped
+SSize_p5c9 <- 0: num_ped
 LamdaVec_p5c9 <- lamdaUnit_p5c9*SSize_p5c9
 powVec_p5c9 <- as.numeric(lapply(LamdaVec_p5c9,powerCal, df = 2))
 
 df_p5c9 <- data.frame(Nped = SSize_p5c9, 
                       power = powVec_p5c9, 
-                      Combination = rep("power9", num_ped))
+                      Combination = rep("power9", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c10 <- new.env()
@@ -141,13 +159,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c10/modelSmr.Rdata", envir = env_
 
 meanDiffLL_mtam_p5c10 <- env_p5c10$smr2$Minus2LogLikelihood - env_p5c10$smr1$Minus2LogLikelihood
 lamdaUnit_p5c10 <- meanDiffLL_mtam_p5c10/env_p5c10$smr1$numObs
-SSize_p5c10 <- 1: num_ped
+SSize_p5c10 <- 0: num_ped
 LamdaVec_p5c10 <- lamdaUnit_p5c10*SSize_p5c10
 powVec_p5c10 <- as.numeric(lapply(LamdaVec_p5c10,powerCal, df = 2))
 
 df_p5c10 <- data.frame(Nped = SSize_p5c10, 
                        power = powVec_p5c10, 
-                       Combination = rep("power10", num_ped))
+                       Combination = rep("power10", num_ped1))
 
 
 ### create a new enviroment for one condition
@@ -156,13 +174,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c11/modelSmr.Rdata", envir = env_
 
 meanDiffLL_mtam_p5c11 <- env_p5c11$smr2$Minus2LogLikelihood - env_p5c11$smr1$Minus2LogLikelihood
 lamdaUnit_p5c11 <- meanDiffLL_mtam_p5c11/env_p5c11$smr1$numObs
-SSize_p5c11 <- 1: num_ped
+SSize_p5c11 <- 0: num_ped
 LamdaVec_p5c11 <- lamdaUnit_p5c11*SSize_p5c11
 powVec_p5c11 <- as.numeric(lapply(LamdaVec_p5c11,powerCal, df = 2))
 
 df_p5c11 <- data.frame(Nped = SSize_p5c11, 
                        power = powVec_p5c11, 
-                       Combination = rep("power11", num_ped))
+                       Combination = rep("power11", num_ped1))
 
 ### create a new enviroment for one condition
 env_p5c12 <- new.env()
@@ -170,13 +188,13 @@ load("~/R-Project/BalancedPed/Simulations/p5/p5c12/modelSmr.Rdata", envir = env_
 
 meanDiffLL_mtam_p5c12 <- env_p5c12$smr2$Minus2LogLikelihood - env_p5c12$smr1$Minus2LogLikelihood
 lamdaUnit_p5c12 <- meanDiffLL_mtam_p5c12/env_p5c12$smr1$numObs
-SSize_p5c12 <- 1: num_ped
+SSize_p5c12 <- 0: num_ped 
 LamdaVec_p5c12 <- lamdaUnit_p5c12*SSize_p5c12
 powVec_p5c12 <- as.numeric(lapply(LamdaVec_p5c12,powerCal, df = 2))
 
 df_p5c12 <- data.frame(Nped = SSize_p5c12, 
                        power = powVec_p5c12, 
-                       Combination = rep("power12", num_ped))
+                       Combination = rep("power12", num_ped1))
 
 ### create a data frame for graphs
 df_p5 <- rbind(df_p5c1, df_p5c2,df_p5c3,df_p5c4, df_p5c5,df_p5c6,df_p5c7, df_p5c8,df_p5c9,df_p5c10, df_p5c11, df_p5c12)
