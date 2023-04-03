@@ -114,7 +114,7 @@ SimPed <- function(kpc = 3,
                               #idx <- j+1
                               if(df_Ngen$sex[j] == "F"){
                                     
-                                    for (k in (j+1):nrow(df_Ngen)){
+                                    for (k in 1:nrow(df_Ngen)){
                                           idr <- df_Ngen$id[k]
                                           tgt <- (!(idr %in% UsedId)) & df_Ngen$sex[k]=="M" 
                                           #tgt <- ifelse(is.na(tgt),FALSE,TRUE)
@@ -131,7 +131,7 @@ SimPed <- function(kpc = 3,
                                    
                               }else {
                                     
-                                    for (k in (j+1):nrow(df_Ngen)){
+                                    for (k in 1:nrow(df_Ngen)){
                                           idr <- df_Ngen$id[k]
                                           tgt <- (!(idr %in% UsedId)) & df_Ngen$sex[k]=="F" 
                                           #tgt <- ifelse(is.na(tgt),FALSE,TRUE)
@@ -183,8 +183,8 @@ SimPed <- function(kpc = 3,
                   N_LinkedMale <- N_LinkedMem-N_LinkedFemale
 
                   # Create a pool for used male children and female children respectively
-                  UsedIdFemale <- character()
-                  UsedIdMale <- character()
+                  UsedIdFemale <- numeric()
+                  UsedIdMale <- numeric()
                   UsedId <- c(UsedIdFemale, UsedIdMale)
 
                   # get the df for the i the generation
@@ -213,7 +213,7 @@ SimPed <- function(kpc = 3,
                                     df_Ngen$IdCouple[j] <- paste(sort(c(df_Ngen$id[j], df_Ngen$spt[j]))[1],
                                                                  sort(c(df_Ngen$id[j], df_Ngen$spt[j]))[2], 
                                                                  sep = "_")
-                                    UsedCoupleId <- c(UsedCoupleId, df_Ngen$id[j], df_Ngen$spt[j] )
+                                    UsedCoupleId <- c(UsedCoupleId, df_Ngen$IdCouple[j])
                               }
                         }
                         
@@ -276,7 +276,7 @@ SimPed <- function(kpc = 3,
                   df_Ngen$ifdau <- FALSE
                   df_Ngen <- df_Ngen[sample(nrow(df_Ngen)),]
                   # Create a pool for the used parents
-                  UsedIdParents <- character()
+                  UsedIdParents <- numeric()
                   
                   for (k in 1:sizeGens[i-1]){
                         #first check if the number of married couples surpass the marriage rate
@@ -346,16 +346,24 @@ SimPed <- function(kpc = 3,
                         #print(IdOfp)
                         
                         if (length(IdPa)-length(IdOfp) > 0) {
-                            IdPa <- IdPa[-sample.int(length(IdPa),size =length(IdPa)-length(IdOfp))]
+                            IdRm <- sample.int(length(IdPa),size =length(IdPa)-length(IdOfp))
+                            IdPa <- IdPa[-IdRm]
+                            IdMa <- IdMa[-IdRm]
                         } else if (length(IdPa)-length(IdOfp) < 0) {
-                              IdOfp <- IdOfp[-sample.int(length(IdOfp),size =length(IdOfp)-length(IdPa))]
+                              IdRm <- sample.int(length(IdOfp),size =length(IdOfp)-length(IdPa))
+                              IdOfp <- IdOfp[-IdRm]
+                              
+                              
                         } 
-                        if (length(IdMa)- length(IdOfp) > 0){
-                            IdMa <- IdMa[-sample.int(length(IdMa),size =length(IdMa)-length(IdOfp))]
-                        }else if (length(IdMa)-length(IdOfp) < 0) {
-                              IdOfp <- IdOfp[-sample.int(length(IdOfp),size =length(IdOfp)-length(IdMa))]
-                        } 
-
+                        # if (length(IdMa)- length(IdOfp) > 0){
+                        #       IdRm <- sample.int(length(IdMa),size =length(IdMa)-length(IdOfp))
+                        #       IdPa <- IdPa[-IdRm]
+                        #       IdMa <- IdMa[-IdRm]
+                        # }else if (length(IdMa)-length(IdOfp) < 0) {
+                        #       IdRm <- sample.int(length(IdOfp),size =length(IdOfp)-length(IdMa))
+                        #       IdOfp <- IdOfp[-IdRm]
+                        # } 
+                        print(matrix(c(IdPa, IdMa), ncol = 2))
                     
                         #print(IdPa)
                         #print(IdOfp)

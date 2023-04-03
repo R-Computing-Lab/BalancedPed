@@ -2,7 +2,7 @@
 
 run_protected_loop <- function(){
 
-      for (p in 3: 7){
+      for (p in 1: 8){
 
             for (c in 1: 11){
                   dir <- paste0("~/R-Project/BalancedPed/Simulations/p",p,"/p",p, "c",c)
