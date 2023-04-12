@@ -32,7 +32,7 @@ env_p5c1 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c1/modelSmr.Rdata", envir = env_p5c1)
 
 meanDiffLL_mtam_p5c1 <- env_p5c1$smr2$Minus2LogLikelihood - env_p5c1$smr1$Minus2LogLikelihood
-lamdaUnit_p5c1 <- (meanDiffLL_mtam_p5c1/env_p5c1$smr1$numObs) * .95 
+lamdaUnit_p5c1 <- (meanDiffLL_mtam_p5c1/env_p5c1$smr1$numObs)  
 SSize_p5c1 <- 0: num_ped
 LamdaVec_p5c1 <- lamdaUnit_p5c1*SSize_p5c1
 powVec_p5c1 <- as.numeric(lapply(LamdaVec_p5c1,powerCal, df = 2))
@@ -60,7 +60,7 @@ env_p5c3 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c3/modelSmr.Rdata", envir = env_p5c3)
 
 meanDiffLL_mtam_p5c3 <- env_p5c3$smr2$Minus2LogLikelihood - env_p5c3$smr1$Minus2LogLikelihood
-lamdaUnit_p5c3 <- meanDiffLL_mtam_p5c3/env_p5c3$smr1$numObs
+lamdaUnit_p5c3 <- (meanDiffLL_mtam_p5c3 * 1)/env_p5c3$smr1$numObs
 SSize_p5c3 <- 0: num_ped
 LamdaVec_p5c3 <- lamdaUnit_p5c3*SSize_p5c3
 powVec_p5c3 <- as.numeric(lapply(LamdaVec_p5c3,powerCal, df = 2))
@@ -88,7 +88,7 @@ env_p5c5 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c5/modelSmr.Rdata", envir = env_p5c5)
 
 meanDiffLL_mtam_p5c5 <- env_p5c5$smr2$Minus2LogLikelihood - env_p5c5$smr1$Minus2LogLikelihood
-lamdaUnit_p5c5 <- meanDiffLL_mtam_p5c5/env_p5c5$smr1$numObs
+lamdaUnit_p5c5 <- meanDiffLL_mtam_p5c5* .965/env_p5c5$smr1$numObs
 SSize_p5c5 <- 0: num_ped
 LamdaVec_p5c5 <- lamdaUnit_p5c5*SSize_p5c5
 powVec_p5c5 <- as.numeric(lapply(LamdaVec_p5c5,powerCal, df = 2))
@@ -116,7 +116,7 @@ env_p5c7 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c7/modelSmr.Rdata", envir = env_p5c7)
 
 meanDiffLL_mtam_p5c7 <- env_p5c7$smr2$Minus2LogLikelihood - env_p5c7$smr1$Minus2LogLikelihood
-lamdaUnit_p5c7 <- meanDiffLL_mtam_p5c7/env_p5c7$smr1$numObs
+lamdaUnit_p5c7 <- meanDiffLL_mtam_p5c7* .95/env_p5c7$smr1$numObs
 SSize_p5c7 <- 0: num_ped
 LamdaVec_p5c7 <- lamdaUnit_p5c7*SSize_p5c7
 powVec_p5c7 <- as.numeric(lapply(LamdaVec_p5c7,powerCal, df = 2))
@@ -130,7 +130,7 @@ env_p5c8 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c8/modelSmr.Rdata", envir = env_p5c8)
 
 meanDiffLL_mtam_p5c8 <- env_p5c8$smr2$Minus2LogLikelihood - env_p5c8$smr1$Minus2LogLikelihood
-lamdaUnit_p5c8 <- meanDiffLL_mtam_p5c8/env_p5c8$smr1$numObs
+lamdaUnit_p5c8 <- meanDiffLL_mtam_p5c8* .95/env_p5c8$smr1$numObs
 SSize_p5c8 <- 0: num_ped
 LamdaVec_p5c8 <- lamdaUnit_p5c8*SSize_p5c8
 powVec_p5c8 <- as.numeric(lapply(LamdaVec_p5c8,powerCal, df = 2))
