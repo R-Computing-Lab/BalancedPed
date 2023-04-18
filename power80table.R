@@ -1,7 +1,7 @@
 ### a script to calculate the number of individuals for a power of .8 in all conditions.
 vec_p <- paste("p", 1:11, sep = "")
-vec_c <- paste("c", 1:11, sep = "")
-df_results <- matrix(nrow = 11, ncol = 11)      
+vec_c <- paste("c", 1:12, sep = "")
+df_results <- matrix(nrow = 12, ncol = 11)      
 colnames(df_results) <- vec_p
 rownames(df_results) <- vec_c
 
@@ -16,7 +16,7 @@ powVec <- as.numeric(lapply(l_vec,powerCal, df = 2))
 tgt_lunit <- which.min(abs(powVec-.80))*lunit
 
 for (p in 1: 11){
-            for (c in 1: 11){
+            for (c in 1: 12){
                   dir <- paste0("~/R-Project/BalancedPed/Simulations/p",p,"/p",p, "c",c)
                   if (dir.exists(dir)){
                         #cat("starttime:", as.character(Sys.time())) 
