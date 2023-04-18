@@ -5,11 +5,11 @@
 #source("~/R-Project/BalancedPed/famSizeCal.R")
 #source("~/R-Project/BalancedPed/SimPed.R")
 source("~/R-Project/BalancedPed/HelperFunctions.R")
-setwd("~/R-Project/BalancedPed/Simulations/p8/p8c12")
+setwd("~/R-Project/BalancedPed/Simulations/p10/p10c12")
 
 library(OpenMx)
 load("~/R-Project/BalancedPed/FixedPed.RData")
-sampleFam <- ped8
+sampleFam <- ped10
 Addmat <- as.matrix(ped2add(sampleFam, verbose = TRUE))
 Nucmat <- ped2cn(sampleFam)
 Extmat <- ped2ce(sampleFam)

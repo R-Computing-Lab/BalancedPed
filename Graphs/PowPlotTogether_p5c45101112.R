@@ -72,7 +72,7 @@ env_p5c11 <- new.env()
 load("~/R-Project/BalancedPed/Simulations/p5/p5c11/modelSmr.Rdata", envir = env_p5c11)
 
 meanDiffLL_mtam_p5c11 <- env_p5c11$smr2$Minus2LogLikelihood - env_p5c11$smr1$Minus2LogLikelihood
-lamdaUnit_p5c11 <- meanDiffLL_mtam_p5c11/env_p5c11$smr1$numObs
+lamdaUnit_p5c11 <- meanDiffLL_mtam_p5c11*.95/env_p5c11$smr1$numObs
 SSize_p5c11 <- 0: (num_ped-1)
 LamdaVec_p5c11 <- lamdaUnit_p5c11*SSize_p5c11
 powVec_p5c11 <- as.numeric(lapply(LamdaVec_p5c11,powerCal, df = 2))
