@@ -65,9 +65,9 @@ g1 <-ggplot(data = df_c6)+ geom_line(mapping = aes(x = Nped, y = power, color= C
       scale_color_manual(values=my_palette[1:3],
                          name="Pedigree Structures",
                          breaks=c("power1", "power2", "power3"),
-                         labels=c("k = 3, s = 4, m = 29",
-                                  "k = 3, s = 5, m = 61", 
-                                  "k = 3, s = 8, m = 509")
+                         labels=c("k = 3, G = 4, m = 29",
+                                  "k = 3, G = 5, m = 61", 
+                                  "k = 3, G = 8, m = 509")
       )+
       theme(panel.background = element_rect(fill = "transparent"),
             panel.grid = element_line(color = "transparent"),
