@@ -214,9 +214,9 @@ g1 <-ggplot(data = df_p8)+ geom_line(mapping = aes(x = Nped, y = power, color= C
                                   "a\u00B2 = .40, mt\u00B2 = .05, e\u00B2 = .30",
                                   "a\u00B2 = .20, mt\u00B2 = .05, e\u00B2 = .50",
                                   "a\u00B2 = .40, mt\u00B2 = .05, e\u00B2 = .20, cn\u00B2 = .10",
-                                  "a\u00B2 = .60, mt\u00B2 = .01, e\u00B2 = .19",
-                                  "a\u00B2 = .40, mt\u00B2 = .01, e\u00B2 = .39",
-                                  "a\u00B2 = .20, mt\u00B2 = .01, e\u00B2 = .59"
+                                  "a\u00B2 = .60, mt\u00B2 = .01, e\u00B2 = .14",
+                                  "a\u00B2 = .40, mt\u00B2 = .01, e\u00B2 = .34",
+                                  "a\u00B2 = .20, mt\u00B2 = .01, e\u00B2 = .54"
                          )
       )+
       theme(plot.margin = margin(5,200,5,5,"pt"),
