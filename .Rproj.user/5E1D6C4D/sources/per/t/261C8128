@@ -1,6 +1,6 @@
 {
     "id": "261C8128",
-    "path": "~/BalancedPed/evenInsert.R",
+    "path": "~/R-Project/BalancedPed/evenInsert.R",
     "project_path": "evenInsert.R",
     "type": "r_source",
     "hash": "2023663901",
@@ -11,7 +11,9 @@
     "relative_order": 2,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "28,0",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1679094396,

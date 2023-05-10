@@ -1,9 +1,9 @@
 {
     "id": "21BE094A",
-    "path": "~/BalancedPed/SimPed.R",
+    "path": "~/R-Project/BalancedPed/SimPed.R",
     "project_path": "SimPed.R",
     "type": "r_source",
-    "hash": "1565470239",
+    "hash": "1930624700",
     "contents": "",
     "dirty": false,
     "created": 1679250283844.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "391,30",
-        "scrollLine": "0"
+        "cursorPosition": "401,0",
+        "scrollLine": "144"
     },
     "folds": "",
-    "lastKnownWriteTime": 1679281523,
+    "lastKnownWriteTime": 1683601256,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1679281523282,
+    "last_content_update": 1683601256904,
     "read_only": false,
     "read_only_alternatives": []
 }

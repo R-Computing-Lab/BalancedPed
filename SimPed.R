@@ -1,6 +1,3 @@
-# 02/07 goal: get the 50% of the function done by next week.
-# Move the repo to the lab repo 02/20
-
 # The goal of this R file is to design a set of functions to simulate "balanced" pedigrees when setting a group of parameters:
 # 1) Kids per couple
 # 2) Number of generations
@@ -219,6 +216,8 @@ SimPed <- function(kpc = 3,
                         
                   }
                   # get the number of linked female and male children after excluding the single children
+                  # get a vector of single person id in the ith generation
+                  IdSingle <- df_Ngen$id[is.na(df_Ngen$spt)]
                   # print(N_LinkedMem)
                   # print(N_LinkedFemale)
                   # print(N_LinkedMale)
@@ -264,7 +263,8 @@ SimPed <- function(kpc = 3,
                         }
                   }
                   #print(df_Ngen)
-
+                  
+                  
                   df_Ngen <- df_Ngen[order(as.numeric(rownames(df_Ngen))),,drop = FALSE]
                   df_Ngen <- df_Ngen[,-ncol(df_Ngen)]
                   df_Fam[df_Fam$gen==i,] <- df_Ngen
@@ -344,14 +344,17 @@ SimPed <- function(kpc = 3,
                         # the length of IdMa and IdPa can be longer than the vector of offspring, so truncated it
                         #print(IdPa)
                         #print(IdOfp)
+                        ###making sure sampling out the single people instead of couples
+
                         
                         if (length(IdPa)-length(IdOfp) > 0) {
                             IdRm <- sample.int(length(IdPa),size =length(IdPa)-length(IdOfp))
                             IdPa <- IdPa[-IdRm]
                             IdMa <- IdMa[-IdRm]
                         } else if (length(IdPa)-length(IdOfp) < 0) {
-                              IdRm <- sample.int(length(IdOfp),size =length(IdOfp)-length(IdPa))
-                              IdOfp <- IdOfp[-IdRm]
+                              IdRm <- sample(IdSingle,size =length(IdOfp)-length(IdPa))
+                              
+                              IdOfp <- IdOfp[!(IdOfp %in% IdRm)]
                               
                               
                         } 
@@ -363,7 +366,7 @@ SimPed <- function(kpc = 3,
                         #       IdRm <- sample.int(length(IdOfp),size =length(IdOfp)-length(IdMa))
                         #       IdOfp <- IdOfp[-IdRm]
                         # } 
-                        print(matrix(c(IdPa, IdMa), ncol = 2))
+                        #print(matrix(c(IdPa, IdMa), ncol = 2))
                     
                         #print(IdPa)
                         #print(IdOfp)
@@ -393,6 +396,9 @@ SimPed <- function(kpc = 3,
       df_Fam <- df_Fam[,1:7]
       df_Fam <- df_Fam[!(is.na(df_Fam$pat)&is.na(df_Fam$mat)&is.na(df_Fam$spt)),]
       colnames(df_Fam)[c(2,4,5)] <- c("ID", "dadID", "momID")
+      
+      # connect the detached members
+      df_Fam[is.na(df_Fam$momID) & is.na(df_Fam$dadID) & df_Fam$gen > 1,]
       #print(df_Fam)
       return(df_Fam)
 }
