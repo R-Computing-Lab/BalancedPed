@@ -1,11 +1,14 @@
 # Create a function as a wrapper of the plot.pedigree function in kinship2 package
 # Reference: kinship2 package by XX
-
+# Parameters:
+# ped: a pedigree simulated from SimPed function
+# cex: the size of the text in the graph
 
 
 
 
 PlotPedigree <- function(ped, cex = .5){
+      library(kinship2)
       p <- ped[,-c(3,6)]
       colnames(p) <- c("ped","id","father","mother","sex")
       p[is.na(p)] <- 0 
