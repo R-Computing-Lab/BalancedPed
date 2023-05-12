@@ -26,4 +26,4 @@ PlotPedigree <- function(ped, cex = .5){
                            cex = cex))
 }
 
-PlotPedigree(SimPed(kpc = 2, Ngen = 6, marR = .8))
+#PlotPedigree(SimPed(kpc = 2, Ngen = 6, marR = .8))
